@@ -15,6 +15,12 @@
       { argv = [ "mako" ]; }
       {
         argv = [
+          "nm-applet"
+          "--indicator"
+        ];
+      }
+      {
+        argv = [
           "swaybg"
           "-m"
           "fill"

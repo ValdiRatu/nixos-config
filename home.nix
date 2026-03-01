@@ -68,6 +68,7 @@
     # apps
     legcord
     zed-editor
+    networkmanagerapplet
 
     # LSPs
     nil

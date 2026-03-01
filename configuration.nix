@@ -24,6 +24,15 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # XDG Desktop Portal (needed for settings apps, screen share, file pickers under Niri)
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = "gtk";
+  };
+
   # Set your time zone.
   time.timeZone = "America/Vancouver";
 
