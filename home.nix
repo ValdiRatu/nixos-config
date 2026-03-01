@@ -5,6 +5,8 @@
   ...
 }:
 {
+  imports = [ ./niri ];
+
   home.username = "valdir";
   home.homeDirectory = "/home/valdir";
   home.stateVersion = osConfig.system.stateVersion;
@@ -30,7 +32,10 @@
 
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "yes";
+    enableDefaultConfig = false;
+    matchBlocks."*" = {
+      addKeysToAgent = "yes";
+    };
   };
 
   programs.git = {
@@ -45,7 +50,7 @@
 
     # wayland / niri
     wl-clipboard
-    waybar
+    # waybar is managed by programs.waybar below
     mako
     fuzzel
     swaylock
@@ -53,6 +58,12 @@
     xwayland-satellite
     grim
     slurp
+
+    # terminal
+    alacritty
+
+    # fonts (needed for waybar icons)
+    nerd-fonts.jetbrains-mono
 
     # apps
     legcord
