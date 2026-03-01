@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "myBox"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -92,7 +92,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features= [
+  nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
@@ -100,7 +100,7 @@
   # zsh
   programs.zsh = {
     enable = true;
-    autoSuggestions.enable = true;
+    autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
   };
 
