@@ -75,6 +75,7 @@
       kdePackages.kate
     #  thunderbird
     ];
+    shell = pks.zsh;
   };
 
   # Install firefox.
@@ -95,6 +96,13 @@
     "nix-command"
     "flakes"
   ];
+
+  # zsh
+  programs.zsh = {
+    enable = true;
+    autoSuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
