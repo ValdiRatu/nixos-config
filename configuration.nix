@@ -104,6 +104,9 @@
     syntaxHighlighting.enable = true;
   };
 
+  # niri
+  programs.niri.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -116,6 +119,9 @@
     fd
     unzip
     wl-clipboard
+    legcord
+    zed-editor
+    nil
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
