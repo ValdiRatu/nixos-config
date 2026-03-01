@@ -74,10 +74,6 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [
-      kdePackages.kate
-      #  thunderbird
-    ];
     shell = pkgs.zsh;
   };
 
@@ -116,16 +112,10 @@
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     git
-    gh
     gcc
     ripgrep
     fd
     unzip
-    wl-clipboard
-    legcord
-    zed-editor
-    nil
-    nixd
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
