@@ -21,10 +21,16 @@
     shellAliases = {
       gs = "git status";
       sysbuild = "sudo nixos-rebuild switch --flake ~/nixos-config#myBox";
+      zed = "zeditor";
       # only can do this if we have a standalone install of home-manager
       # TODO: look into this!
       # homebuild = "home-manager switch --flake .#valdir";
     };
+  };
+
+  programs.ssh = {
+    enable = true;
+    addKeysToAgent = "yes";
   };
 
   programs.git = {
