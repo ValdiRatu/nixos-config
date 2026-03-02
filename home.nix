@@ -11,6 +11,14 @@
   home.homeDirectory = "/home/valdir";
   home.stateVersion = osConfig.system.stateVersion;
 
+  programs.niri.settings = {
+    input = {
+      touchpad = {
+        natural-scroll = false;
+      };
+    };
+  };
+
   programs.zsh = {
     enable = true;
     defaultKeymap = "emacs";
