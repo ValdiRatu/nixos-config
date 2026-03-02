@@ -55,6 +55,7 @@
   home.packages = with pkgs; [
     # dev
     gh
+    claude-code
 
     # wayland / niri
     wl-clipboard

@@ -11,7 +11,6 @@
 
     spawn-at-startup = [
       { argv = [ "xwayland-satellite" ]; }
-      # waybar is started via programs.waybar.systemd in waybar.nix
       { argv = [ "mako" ]; }
       {
         argv = [

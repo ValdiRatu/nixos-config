@@ -7,13 +7,15 @@
       url = "github:nix-community/home-manager" ;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    claude-code.url = "github:sadjow/claude-code-nix";
   };
-  outputs = { self, nixpkgs, niri, home-manager }: {
+  outputs = { self, nixpkgs, niri, home-manager, claude-code }: {
     nixosConfigurations.myBox = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
         niri.nixosModules.niri
+        { nixpkgs.overlays = [ claude-code.overlays.default ]; }
         home-manager.nixosModules.home-manager {
           home-manager.users.valdir = import ./home.nix;
           home-manager.useGlobalPkgs = true;
