@@ -13,7 +13,7 @@
       kb-move-sel-prev = "k,Up,ISO_Left_Tab";
       kb-row-first = "g";
       kb-row-last = "G";
-      kb-cancel = "q,Escape,Control+c";
+      kb-cancel = "q,Escape";
     };
 
     theme =

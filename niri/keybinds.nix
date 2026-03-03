@@ -5,7 +5,7 @@
 {
   programs.niri.settings.binds = with config.lib.niri.actions; {
     # Apps
-    "Mod+T".action = spawn "alacritty";
+    "Mod+T".action = spawn "ghostty";
     "Mod+Space".action = spawn "fuzzel";
     "Super+Alt+L".action = spawn "swaylock";
     "Mod+W".action = spawn "niri-window-picker";
@@ -26,6 +26,7 @@
     "Mod+Right".action = focus-column-right;
     "Mod+Up".action = focus-window-up;
     "Mod+Down".action = focus-window-down;
+    "Mod+Tab".action = focus-window-previous;
 
     # Move windows
     "Mod+Ctrl+H".action = move-column-left;

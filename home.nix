@@ -73,6 +73,7 @@
 
     # terminal
     alacritty
+    ghostty
 
     # fonts (needed for waybar icons)
     nerd-fonts.jetbrains-mono
