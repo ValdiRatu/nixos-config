@@ -8,6 +8,7 @@
     "Mod+T".action = spawn "alacritty";
     "Mod+Space".action = spawn "fuzzel";
     "Super+Alt+L".action = spawn "swaylock";
+    "Mod+W".action = spawn "niri-window-picker";
 
     # Window management
     "Mod+Q".action = close-window;

@@ -5,7 +5,10 @@
   ...
 }:
 {
-  imports = [ ./niri ];
+  imports = [
+    ./niri
+    ./rofi
+  ];
 
   home.username = "valdir";
   home.homeDirectory = "/home/valdir";
