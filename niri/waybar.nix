@@ -4,7 +4,7 @@ let
   # ║  SWITCH STYLE HERE — change to neon.nix or          ║
   # ║  minimal.nix for a completely different look         ║
   # ╚══════════════════════════════════════════════════════╝
-  style = import ./waybar-styles/frost.nix;
+  style = import ./waybar-styles/minimal.nix;
 
   # ── Icon definitions ─────────────────────────────────
   # Using verified Nerd Font codepoints (Material Design Icons range)
