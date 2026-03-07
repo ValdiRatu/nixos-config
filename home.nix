@@ -78,6 +78,10 @@
     # fonts (needed for waybar icons)
     nerd-fonts.jetbrains-mono
 
+    # media / audio
+    playerctl
+    pavucontrol
+
     # apps
     legcord
     zed-editor
