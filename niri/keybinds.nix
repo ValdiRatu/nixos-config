@@ -16,6 +16,10 @@
     "Mod+Shift+F".action = fullscreen-window;
     "Mod+F".action = maximize-column;
     "Mod+C".action = center-column;
+     
+    # Vertical Windows
+    "Mod+shift+j".action = consume-or-expel-window-left;
+    "Mod+shift+k".action = consume-or-expel-window-right;
 
     # Focus movement
     "Mod+H".action = focus-column-left;
