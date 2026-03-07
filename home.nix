@@ -66,7 +66,6 @@
     mako
     fuzzel
     swaylock
-    swaybg
     xwayland-satellite
     grim
     slurp
@@ -93,5 +92,6 @@
     
     # background
     awww
+    waypaper
   ];
 }

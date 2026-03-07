@@ -18,13 +18,11 @@
           "--indicator"
         ];
       }
+      { argv = [ "awww-daemon" ]; }
       {
         argv = [
-          "swaybg"
-          "-m"
-          "fill"
-          "-c"
-          "#1a1a2e"
+          "waypaper"
+          "--restore"
         ];
       }
     ];
