@@ -3,8 +3,6 @@
   programs.waybar = {
     enable = true;
 
-    # Start waybar as a systemd service bound to the niri session
-    # This is the recommended approach instead of spawn-at-startup
     systemd = {
       enable = true;
       target = "niri.service";
@@ -12,7 +10,7 @@
 
     settings = {
       mainBar = {
-        layer = "top"; # Required for niri: render above windows
+        layer = "top";
         position = "top";
         height = 36;
         spacing = 4;
@@ -65,11 +63,13 @@
         };
 
         "network" = {
-          format-wifi = " {signalStrength}%";
+          format-wifi = "{essid} {signalStrength}%";
           format-ethernet = " connected";
           format-disconnected = "󰖪 disconnected";
           format-alt = "{ifname}: {ipaddr}/{cidr}";
           tooltip-format = "{ifname}: {ipaddr}\n{essid} ({signalStrength}%)";
+          on-click = "nm-connection-editor";
+          on-click-right = "ghostty -e nmtui";
         };
 
         "cpu" = {
