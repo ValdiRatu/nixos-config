@@ -90,5 +90,8 @@
     # LSPs
     nil
     nixd
+    
+    # background
+    awww
   ];
 }
