@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   # ╔══════════════════════════════════════════════════════╗
-  # ║  SWITCH STYLE HERE — change to neon.nix or          ║
+  # ║  SWITCH STYLE HERE — change to neon.nix or           ║
   # ║  minimal.nix for a completely different look         ║
   # ╚══════════════════════════════════════════════════════╝
   style = import ./waybar-styles/minimal.nix;
