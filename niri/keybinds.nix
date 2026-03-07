@@ -18,8 +18,8 @@
     "Mod+C".action = center-column;
      
     # Vertical Windows
-    "Mod+shift+j".action = consume-or-expel-window-below;
-    "Mod+shift+k".action = consume-or-expel-window-above;
+    "Mod+shift+j".action = consume-or-expel-window-left;
+    "Mod+shift+k".action = consume-or-expel-window-right;
 
     # Focus movement
     "Mod+H".action = focus-column-left;
