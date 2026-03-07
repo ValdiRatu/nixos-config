@@ -50,10 +50,10 @@
     "Mod+Ctrl+I".action = move-column-to-workspace-up;
 
     # Screenshots — access hyphenated actions directly to avoid scope issues
-    # not working for some reason :(
-    # "Print".action = screenshot;
-    # "Ctrl+Print".action = config.lib.niri.actions."screenshot-screen";
-    # "Alt+Print".action = config.lib.niri.actions."screenshot-window";
+    # https://github.com/sodiboo/niri-flake/issues/1380
+    "Print".action.screenshot = [];
+    # "Ctrl+Print".action.screenshot-screen = [];
+    # "Alt+Print".action.screnshot-window = [];
 
     # Volume keys
     "XF86AudioRaiseVolume".action = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+";
