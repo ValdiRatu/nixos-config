@@ -19,7 +19,7 @@ let
     DATA=$(${pkgs.curl}/bin/curl -sf "wttr.in/?format=j1" 2>/dev/null)
 
     if [ -z "$DATA" ]; then
-      echo '{"text": "  --", "tooltip": "Weather unavailable", "class": "disconnected"}'
+      echo '{"text": " --°", "tooltip": "Weather unavailable", "class": "disconnected"}'
       exit 0
     fi
 
@@ -29,17 +29,23 @@ let
     HUMIDITY=$(echo "$DATA" | ${pkgs.jq}/bin/jq -r '.current_condition[0].humidity')
     WIND=$(echo "$DATA" | ${pkgs.jq}/bin/jq -r '.current_condition[0].windspeedKmph')
     AREA=$(echo "$DATA" | ${pkgs.jq}/bin/jq -r '.nearest_area[0].areaName[0].value')
+    CODE=$(echo "$DATA" | ${pkgs.jq}/bin/jq -r '.current_condition[0].weatherCode')
 
-    # Weather icon based on description
-    case "$(echo "$DESC" | tr '[:upper:]' '[:lower:]')" in
-      *clear*|*sunny*)  ICON="" ;;
-      *partly*|*cloud*) ICON="" ;;
-      *overcast*)       ICON="" ;;
-      *rain*|*drizzle*) ICON="" ;;
-      *thunder*)        ICON="" ;;
-      *snow*)           ICON="" ;;
-      *fog*|*mist*)     ICON="" ;;
-      *)                ICON="" ;;
+    # Weather icon based on code
+    case "$CODE" in
+      113) ICON="" ;;            # Clear/Sunny
+      116) ICON="" ;;            # Partly cloudy
+      119|122) ICON="" ;;        # Cloudy/Overcast
+      143|248|260) ICON="" ;;    # Fog/Mist
+      176|263|266|293|296|353)
+        ICON="" ;;               # Light rain/drizzle
+      299|302|305|308|356|359)
+        ICON="" ;;               # Heavy rain
+      200|386|389|392|395)
+        ICON="" ;;               # Thunder
+      179|182|185|227|230|281|284|311|314|317|320|323|326|329|332|335|338|350|362|365|368|371|374|377)
+        ICON="" ;;               # Snow/sleet/ice
+      *)  ICON="" ;;
     esac
 
     TOOLTIP="$DESC in $AREA\nFeels like ''${FEELS}°C\nHumidity: ''${HUMIDITY}%\nWind: ''${WIND} km/h"
@@ -81,7 +87,7 @@ in
       mainBar = {
         layer = "top";
         position = "top";
-        height = 40;
+        height = 44;
         margin-top = 6;
         margin-left = 8;
         margin-right = 8;
@@ -110,41 +116,37 @@ in
         # ── Left ──────────────────────────────────────────
 
         "niri/workspaces" = {
-          format = "{icon}";
-          format-icons = {
-            active = "";
-            default = "";
-          };
+          format = "{index}";
         };
 
         "niri/window" = {
           format = "{}";
           max-length = 40;
           rewrite = {
-            "" = " desktop";
+            "" = "desktop";
           };
         };
 
         # ── Center ────────────────────────────────────────
 
         "mpris" = {
-          format = "{status_icon} {artist} — {title}";
-          format-paused = "{status_icon} <i>{artist} — {title}</i>";
+          format = "{status_icon}  {artist} - {title}";
+          format-paused = "{status_icon}  <i>{artist} - {title}</i>";
           format-stopped = "";
-          max-length = 45;
+          max-length = 40;
           status-icons = {
-            playing = "󰐊";
-            paused = "󰏤";
+            playing = "";
+            paused = "";
           };
-          tooltip-format = "{player}: {title}\n{artist} · {album}";
+          tooltip-format = "{player}: {title}\n{artist} - {album}";
           on-click = "playerctl play-pause";
           on-scroll-up = "playerctl next";
           on-scroll-down = "playerctl previous";
         };
 
         "clock" = {
-          format = "  {:%H:%M}";
-          format-alt = "  {:%A, %B %d}";
+          format = "  {:%I:%M %p}";
+          format-alt = "  {:%A, %b %d}";
           tooltip-format = "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>";
           calendar = {
             mode = "month";
@@ -169,16 +171,16 @@ in
 
         "tray" = {
           spacing = 8;
-          icon-size = 15;
+          icon-size = 16;
         };
 
         "network" = {
           format-wifi = "  {signalStrength}%";
-          format-ethernet = "󰈀  connected";
-          format-disconnected = "󰖪  off";
-          format-alt = "  {essid}  ·  {ipaddr}";
-          tooltip-format-wifi = "{essid}\n{ifname}: {ipaddr}\nStrength: {signalStrength}%\n⬇ {bandwidthDownBytes}  ⬆ {bandwidthUpBytes}";
-          tooltip-format-ethernet = "{ifname}: {ipaddr}\n⬇ {bandwidthDownBytes}  ⬆ {bandwidthUpBytes}";
+          format-ethernet = "  {ipaddr}";
+          format-disconnected = "  off";
+          format-alt = "  {essid}";
+          tooltip-format-wifi = "{essid}\n{ifname}: {ipaddr}\nStrength: {signalStrength}%";
+          tooltip-format-ethernet = "{ifname}: {ipaddr}";
           tooltip-format-disconnected = "No connection";
           interval = 5;
           on-click = "nm-connection-editor";
@@ -206,12 +208,8 @@ in
         };
 
         "pulseaudio" = {
-          format = "{icon}  {volume}%";
-          format-muted = "󰖁  muted";
-          format-icons = {
-            headphone = "󰋋";
-            default = [ "" "" "󰕾" "" ];
-          };
+          format = "  {volume}%";
+          format-muted = "  mute";
           tooltip-format = "{desc}\nVolume: {volume}%";
           on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
           on-click-right = "pavucontrol";
@@ -219,7 +217,7 @@ in
         };
 
         "custom/power" = {
-          format = "⏻";
+          format = "";
           tooltip = false;
           on-click = "waybar-power-menu";
         };
@@ -236,13 +234,11 @@ in
         border-radius: 0;
       }
 
-      /* Transparent bar — the islands provide their own bg */
       window#waybar {
         background: transparent;
         color: #cdd6f4;
       }
 
-      /* Prevent tooltip clipping */
       tooltip {
         background: #1e1e2e;
         border: 1px solid #45475a;
@@ -259,58 +255,45 @@ in
       .modules-left,
       .modules-center,
       .modules-right {
-        background: rgba(30, 30, 46, 0.85);
-        border: 1px solid rgba(69, 71, 90, 0.6);
+        background: rgba(30, 30, 46, 0.92);
+        border: 1px solid rgba(69, 71, 90, 0.5);
         border-radius: 14px;
-        padding: 0 6px;
+        padding: 0 4px;
         margin: 4px 0;
       }
 
-      /* Subtle shadow via border glow */
       .modules-left   { margin-left:  2px; }
       .modules-right  { margin-right: 2px; }
 
-      /* ── All Modules — shared base ────────────────────── */
-      #workspaces,
-      #window,
-      #mpris,
-      #clock,
-      #custom-weather,
-      #tray,
-      #network,
-      #cpu,
-      #memory,
-      #pulseaudio,
-      #custom-power {
-        padding: 0 10px;
-        transition: all 0.3s ease;
-      }
-
       /* ── Workspaces ───────────────────────────────────── */
       #workspaces button {
-        padding: 0 5px;
-        margin: 4px 1px;
+        padding: 0 8px;
+        margin: 5px 2px;
         color: #585b70;
         background: transparent;
-        border-radius: 10px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 12px;
+        min-width: 20px;
         transition: all 0.3s ease;
       }
 
       #workspaces button.active,
       #workspaces button.focused {
-        color: #89b4fa;
-        background: rgba(137, 180, 250, 0.12);
+        color: #1e1e2e;
+        background: #89b4fa;
         min-width: 24px;
       }
 
       #workspaces button:hover {
-        color: #b4befe;
-        background: rgba(180, 190, 254, 0.1);
+        color: #cdd6f4;
+        background: rgba(137, 180, 250, 0.25);
       }
 
-      /* ── Window ───────────────────────────────────────── */
+      /* ── Window Title ─────────────────────────────────── */
       #window {
-        color: #a6adc8;
+        color: #7f849c;
+        padding: 0 12px;
         font-style: italic;
       }
 
@@ -318,33 +301,28 @@ in
       #clock {
         color: #89b4fa;
         font-weight: bold;
-      }
-
-      #clock:hover {
-        color: #b4befe;
+        padding: 0 14px;
       }
 
       /* ── Media Player ─────────────────────────────────── */
       #mpris {
         color: #a6e3a1;
+        padding: 0 12px;
       }
 
       #mpris.paused {
-        color: #6c7086;
-      }
-
-      #mpris:hover {
-        color: #94e2d5;
+        color: #585b70;
       }
 
       /* ── Weather ──────────────────────────────────────── */
       #custom-weather {
         color: #f9e2af;
+        padding: 0 12px;
       }
 
       /* ── Tray ─────────────────────────────────────────── */
       #tray {
-        padding: 0 6px;
+        padding: 0 8px;
       }
 
       #tray > .passive {
@@ -353,83 +331,96 @@ in
 
       #tray > .needs-attention {
         -gtk-icon-effect: highlight;
-        background-color: rgba(243, 139, 168, 0.3);
-        border-radius: 8px;
       }
 
-      /* ── Network ──────────────────────────────────────── */
+      /* ── Right-side module pills ──────────────────────── */
+      /* Each module gets its own colored background pill    */
+
       #network {
         color: #89dceb;
+        background: rgba(137, 220, 235, 0.1);
+        border-radius: 10px;
+        padding: 0 12px;
+        margin: 5px 2px;
       }
 
       #network.disconnected {
         color: #f38ba8;
+        background: rgba(243, 139, 168, 0.1);
       }
 
-      #network:hover {
-        color: #74c7ec;
-      }
-
-      /* ── CPU ──────────────────────────────────────────── */
       #cpu {
         color: #a6e3a1;
+        background: rgba(166, 227, 161, 0.1);
+        border-radius: 10px;
+        padding: 0 12px;
+        margin: 5px 2px;
       }
 
       #cpu.warning {
         color: #f9e2af;
+        background: rgba(249, 226, 175, 0.1);
       }
 
       #cpu.critical {
         color: #f38ba8;
+        background: rgba(243, 139, 168, 0.15);
       }
 
-      /* ── Memory ───────────────────────────────────────── */
       #memory {
         color: #fab387;
+        background: rgba(250, 179, 135, 0.1);
+        border-radius: 10px;
+        padding: 0 12px;
+        margin: 5px 2px;
       }
 
       #memory.warning {
         color: #f9e2af;
+        background: rgba(249, 226, 175, 0.1);
       }
 
       #memory.critical {
         color: #f38ba8;
+        background: rgba(243, 139, 168, 0.15);
       }
 
-      /* ── Audio ─────────────────────────────────────────── */
       #pulseaudio {
         color: #cba6f7;
+        background: rgba(203, 166, 247, 0.1);
+        border-radius: 10px;
+        padding: 0 12px;
+        margin: 5px 2px;
       }
 
       #pulseaudio.muted {
         color: #585b70;
+        background: rgba(88, 91, 112, 0.1);
       }
 
-      #pulseaudio:hover {
-        color: #b4befe;
-      }
-
-      /* ── Power ─────────────────────────────────────────── */
+      /* ── Power Button ─────────────────────────────────── */
       #custom-power {
         color: #f38ba8;
-        font-size: 15px;
         padding: 0 12px 0 8px;
+        margin: 5px 2px;
+        border-radius: 10px;
+        font-size: 14px;
+        transition: all 0.3s ease;
       }
 
       #custom-power:hover {
-        color: #eba0ac;
-        text-shadow: 0 0 8px rgba(243, 139, 168, 0.6);
+        background: rgba(243, 139, 168, 0.15);
       }
 
-      /* ── Module separator — thin vertical line ─────────── */
-      #cpu,
-      #memory,
-      #pulseaudio,
-      #custom-weather,
-      #network {
-        border-left: 1px solid rgba(88, 91, 112, 0.4);
-        margin-top: 6px;
-        margin-bottom: 6px;
+      /* ── Pulse animation for critical states ──────────── */
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50%      { opacity: 0.5; }
+      }
+
+      #cpu.critical,
+      #memory.critical {
+        animation: pulse 1.5s ease-in-out infinite;
       }
     '';
   };
