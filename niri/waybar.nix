@@ -112,8 +112,8 @@ in
       mainBar = {
         layer = "top";
         position = "top";
-        height = 44;
-        margin-top = 6;
+        height = 40;
+        margin-top = 4;
         margin-left = 8;
         margin-right = 8;
         spacing = 0;
@@ -147,9 +147,9 @@ in
 
         "niri/window" = {
           format = "{}";
-          max-length = 40;
+          max-length = 30;
           rewrite = {
-            "" = "desktop";
+            "" = "";
           };
         };
 
@@ -171,8 +171,8 @@ in
         };
 
         "clock" = {
-          format = "${icons.clock} {:%I:%M %p}";
-          format-alt = "${icons.calendar} {:%A, %b %d}";
+          format = "{:%I:%M}";
+          format-alt = "{:%A, %b %d}";
           tooltip-format = "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>";
           calendar = {
             mode = "month";
@@ -201,10 +201,10 @@ in
         };
 
         "network" = {
-          format-wifi = "${icons.wifi} {signalStrength}%";
-          format-ethernet = "${icons.ethernet} connected";
-          format-disconnected = "${icons.wifi_off} off";
-          format-alt = "${icons.wifi} {essid}";
+          format-wifi = "${icons.wifi}";
+          format-ethernet = "${icons.ethernet}";
+          format-disconnected = "${icons.wifi_off}";
+          format-alt = "${icons.wifi} {essid} {signalStrength}%";
           tooltip-format-wifi = "{essid}\n{ifname}: {ipaddr}\nStrength: {signalStrength}%";
           tooltip-format-ethernet = "{ifname}: {ipaddr}";
           tooltip-format-disconnected = "No connection";
@@ -214,7 +214,7 @@ in
         };
 
         "cpu" = {
-          format = "${icons.cpu} {usage}%";
+          format = "${icons.cpu} {usage}";
           interval = 3;
           tooltip-format = "CPU: {usage}%\n{avg_frequency} GHz";
           states = {
@@ -224,7 +224,7 @@ in
         };
 
         "memory" = {
-          format = "${icons.memory} {percentage}%";
+          format = "${icons.memory} {percentage}";
           interval = 5;
           tooltip-format = "RAM: {used:0.1f}G / {total:0.1f}G\nSwap: {swapUsed:0.1f}G / {swapTotal:0.1f}G";
           states = {
@@ -239,9 +239,9 @@ in
             warning = 30;
             critical = 15;
           };
-          format = "{icon} {capacity}%";
-          format-charging = "${icons.bat_chg} {capacity}%";
-          format-full = "${icons.bat_full} full";
+          format = "{icon} {capacity}";
+          format-charging = "${icons.bat_chg} {capacity}";
+          format-full = "${icons.bat_full}";
           format-icons = [
             icons.bat_empty
             icons.bat_low
@@ -253,8 +253,8 @@ in
         };
 
         "pulseaudio" = {
-          format = "{icon} {volume}%";
-          format-muted = "${icons.vol_mute} mute";
+          format = "{icon} {volume}";
+          format-muted = "${icons.vol_mute}";
           format-icons = {
             default = [
               icons.vol_low

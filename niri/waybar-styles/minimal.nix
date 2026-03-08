@@ -1,5 +1,5 @@
-# Minimal — Clean, understated, monochrome with a single warm accent
-# Thin bar, no backgrounds on modules, just clean typography and spacing
+# Minimal v2 — Refined hierarchy, deliberate use of space and silence
+# Clock dominates, stats recede, one warm accent, everything breathes
 ''
   /* ── Base ──────────────────────────────────────── */
   * {
@@ -12,39 +12,45 @@
 
   window#waybar {
     background: transparent;
-    color: #908caa;
+    color: #6e6a86;
   }
 
   tooltip {
-    background: rgba(25, 23, 36, 0.95);
-    border: 1px solid rgba(110, 106, 134, 0.3);
-    border-radius: 8px;
+    background: rgba(25, 23, 36, 0.96);
+    border: 1px solid rgba(110, 106, 134, 0.2);
+    border-radius: 10px;
     color: #e0def4;
+    padding: 2px;
   }
 
   tooltip label {
     color: #e0def4;
-    padding: 4px 2px;
+    padding: 4px 6px;
   }
 
-  /* ── Floating Islands ─────────────────────────── */
+  /* ── Layout — two islands + floating clock ──────── */
   .modules-left,
-  .modules-center,
   .modules-right {
-    background: rgba(25, 23, 36, 0.75);
-    border: none;
+    background: rgba(25, 23, 36, 0.72);
     border-radius: 12px;
-    padding: 0 8px;
-    margin: 5px 0;
+    padding: 0 6px;
+    margin: 6px 0;
   }
 
-  .modules-left   { margin-left:  2px; }
-  .modules-right  { margin-right: 2px; }
+  .modules-center {
+    background: rgba(25, 23, 36, 0.72);
+    border-radius: 12px;
+    padding: 0 4px;
+    margin: 6px 0;
+  }
 
-  /* ── Workspaces ────────────────────────────────── */
+  .modules-left   { margin-left: 6px; }
+  .modules-right  { margin-right: 6px; }
+
+  /* ── Workspaces — underline active ───────────────── */
   #workspaces button {
-    padding: 0 6px;
-    margin: 6px 1px;
+    padding: 0 8px;
+    margin: 7px 2px;
     color: #44415a;
     background: transparent;
     border-radius: 6px;
@@ -63,90 +69,104 @@
     color: #908caa;
   }
 
-  /* ── Window Title ──────────────────────────────── */
+  /* ── Window Title — whisper quiet ────────────────── */
   #window {
     color: #6e6a86;
-    padding: 0 10px;
+    padding: 0 14px;
+    font-size: 11px;
   }
 
-  /* ── Clock ─────────────────────────────────────── */
+  /* ── Clock — the anchor, largest element ─────────── */
   #clock {
     color: #e0def4;
     font-weight: bold;
-    padding: 0 14px;
+    font-size: 14px;
+    padding: 0 16px;
+    letter-spacing: 0.5px;
   }
 
-  /* ── Media Player ──────────────────────────────── */
+  /* ── Media Player ────────────────────────────────── */
   #mpris {
     color: #9ccfd8;
-    padding: 0 10px;
+    padding: 0 14px;
+    font-size: 11px;
   }
 
   #mpris.paused {
     color: #44415a;
   }
 
-  /* ── Weather ───────────────────────────────────── */
+  /* ── Weather — the single warm accent ────────────── */
   #custom-weather {
     color: #f6c177;
-    padding: 0 10px;
+    padding: 0 14px;
+    font-size: 12px;
   }
 
-  /* ── Tray ──────────────────────────────────────── */
+  /* ── Tray ────────────────────────────────────────── */
   #tray {
-    padding: 0 6px;
+    padding: 0 8px;
   }
 
   #tray > .passive {
     -gtk-icon-effect: dim;
   }
 
-  /* ── Right modules — clean, no pills ───────────── */
+  /* ── Right modules — receded, icon-forward ──────── */
   #network,
   #cpu,
   #memory,
+  #battery,
   #pulseaudio {
-    padding: 0 10px;
-    margin: 5px 0;
-    transition: all 0.3s ease;
+    padding: 0 12px;
+    margin: 6px 0;
+    color: #6e6a86;
+    font-size: 11px;
+    transition: color 0.3s ease;
   }
 
-  #network       { color: #908caa; }
-  #network:hover { color: #e0def4; }
+  #network:hover,
+  #cpu:hover,
+  #memory:hover,
+  #battery:hover,
+  #pulseaudio:hover {
+    color: #e0def4;
+  }
+
+  /* ── State colors — only surface when they matter ── */
   #network.disconnected { color: #eb6f92; }
 
-  #cpu       { color: #908caa; }
-  #cpu:hover { color: #e0def4; }
+  #cpu.warning          { color: #f6c177; }
+  #cpu.critical         { color: #eb6f92; }
 
-  #cpu.warning  { color: #f6c177; }
-  #cpu.critical { color: #eb6f92; }
+  #memory.warning       { color: #f6c177; }
+  #memory.critical      { color: #eb6f92; }
 
-  #memory       { color: #908caa; }
-  #memory:hover { color: #e0def4; }
-
-  #memory.warning  { color: #f6c177; }
-  #memory.critical { color: #eb6f92; }
-
-  #pulseaudio       { color: #908caa; }
-  #pulseaudio:hover { color: #e0def4; }
-  #pulseaudio.muted { color: #44415a; }
-
-  /* ── Separator dots between right modules ──────── */
-  #cpu,
-  #memory,
-  #pulseaudio {
-    border-left: 1px solid rgba(110, 106, 134, 0.2);
+  #battery.warning      { color: #f6c177; }
+  #battery.critical     {
+    color: #eb6f92;
+    animation: urgent-pulse 2s ease-in-out infinite;
   }
+  #battery.charging     { color: #9ccfd8; }
 
-  /* ── Power Button ──────────────────────────────── */
+  #pulseaudio.muted     { color: #44415a; }
+
+  /* ── Power — ghost until needed ──────────────────── */
   #custom-power {
-    color: #6e6a86;
-    padding: 0 8px 0 6px;
-    margin: 5px 0;
-    transition: all 0.3s ease;
+    color: #44415a;
+    padding: 0 10px 0 8px;
+    margin: 6px 0;
+    transition: color 0.3s ease;
   }
 
   #custom-power:hover {
     color: #eb6f92;
+  }
+
+  /* ── Animation ───────────────────────────────────── */
+  @keyframes urgent-pulse {
+    0%   { opacity: 1; }
+    50%  { opacity: 0.4; }
+    100% { opacity: 1; }
   }
 ''
