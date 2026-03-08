@@ -25,6 +25,12 @@ let
     pause     = "󰏤"; # nf-md-pause                U+F03E4
     power     = "󰐥"; # nf-md-power                U+F0425
     weather   = "󰖙"; # nf-md-weather_partly_cloudy U+F0599
+    bat_full  = "󰁹"; # nf-md-battery              U+F0079
+    bat_high  = "󰂀"; # nf-md-battery_80           U+F0080
+    bat_med   = "󰁾"; # nf-md-battery_60           U+F007E
+    bat_low   = "󰁼"; # nf-md-battery_40           U+F007C
+    bat_empty = "󰁺"; # nf-md-battery_10           U+F007A
+    bat_chg   = "󰂄"; # nf-md-battery_charging     U+F0084
   };
 
   # ── Weather script ───────────────────────────────────
@@ -128,6 +134,7 @@ in
           "network"
           "cpu"
           "memory"
+          "battery"
           "pulseaudio"
           "custom/power"
         ];
@@ -224,6 +231,25 @@ in
             warning = 70;
             critical = 90;
           };
+        };
+
+        "battery" = {
+          interval = 30;
+          states = {
+            warning = 30;
+            critical = 15;
+          };
+          format = "{icon} {capacity}%";
+          format-charging = "${icons.bat_chg} {capacity}%";
+          format-full = "${icons.bat_full} full";
+          format-icons = [
+            icons.bat_empty
+            icons.bat_low
+            icons.bat_med
+            icons.bat_high
+            icons.bat_full
+          ];
+          tooltip-format = "{timeTo}\nCycles: {cycles}\nHealth: {health}%";
         };
 
         "pulseaudio" = {
