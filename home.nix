@@ -66,7 +66,6 @@
     mako
     fuzzel
     swaylock
-    swaybg
     xwayland-satellite
     grim
     slurp
@@ -90,5 +89,9 @@
     # LSPs
     nil
     nixd
+    
+    # background
+    awww
+    waypaper
   ];
 }

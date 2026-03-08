@@ -8,14 +8,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code.url = "github:sadjow/claude-code-nix";
+    awww.url = "git+https://codeberg.org/LGFae/awww";
   };
-  outputs = { self, nixpkgs, niri, home-manager, claude-code }: {
+  outputs = { self, nixpkgs, niri, home-manager, claude-code, awww }: {
     nixosConfigurations.myBox = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
         niri.nixosModules.niri
-        { nixpkgs.overlays = [ claude-code.overlays.default ]; }
+        { nixpkgs.overlays = [ 
+          claude-code.overlays.default 
+          awww.overlays.default
+        ]; }
         home-manager.nixosModules.home-manager {
           home-manager.users.valdir = import ./home.nix;
           home-manager.useGlobalPkgs = true;
