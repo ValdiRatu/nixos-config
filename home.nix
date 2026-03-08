@@ -31,6 +31,14 @@
       save = 1000;
       path = "${config.home.homeDirectory}/.histfile";
     };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "z"
+      ];
+      theme = "robbyrussell";
+    };
     shellAliases = {
       gs = "git status";
       sysbuild = "sudo nixos-rebuild switch --flake ~/nixos-config#myBox";
