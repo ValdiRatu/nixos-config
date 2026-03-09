@@ -101,5 +101,8 @@
     # background
     awww
     waypaper
+    
+    # spacetimedb
+    spacetimedb-self
   ];
 }
