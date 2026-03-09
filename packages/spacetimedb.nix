@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, autoPatchelfHook, gcc-unwrapped }:
+{ lib, stdenv, fetchurl, autoPatchelfHook, gcc-unwrapped, zlib }:
   
 stdenv.mkDerivation rec {
   pname = "spacetimedb";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ autoPatchelfHook ];
 
-  buildInputs = [ gcc-unwrapped.lib ];
+  buildInputs = [ gcc-unwrapped.lib zlib ];
   
   installPhase = ''
     mkdir -p $out/bin
