@@ -57,6 +57,11 @@
     };
   };
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
   programs.git = {
     enable = true;
     settings.user.name = "ValdiRatu";
@@ -101,8 +106,5 @@
     # background
     awww
     waypaper
-    
-    # spacetimedb
-    spacetimedb-self
   ];
 }

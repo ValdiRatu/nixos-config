@@ -17,7 +17,8 @@ stdenv.mkDerivation rec {
   
   installPhase = ''
     mkdir -p $out/bin
-    cp spacetimedb-standalone $out/bin/spacetime
+    cp spacetimedb-standalone $out/bin/spacetimedb-standalone
+    cp spacetimedb-cli $out/bin/spacetime
   '';
   
   meta = {
