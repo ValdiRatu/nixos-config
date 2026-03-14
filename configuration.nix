@@ -87,6 +87,25 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+  
+  # enable postgres
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_18;
+    ensureDatabases = [
+      "valdi_db"
+    ];
+    ensureUsers = [
+     {
+       name = "valdi";
+       ensureDBOwnership = true;
+     } 
+    ];
+    authentication = ''
+     local all all trust 
+     host all all 127.0.0.1/32 trust
+    '';
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
