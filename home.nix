@@ -70,6 +70,12 @@
     enable = true;
     nix-direnv.enable = true;
   };
+  
+  programs.eza = {
+   enable = true;
+   icons = "auto";
+   git = true;
+  };
 
   programs.git = {
     enable = true;
@@ -81,6 +87,7 @@
     # dev
     gh
     claude-code
+    godot
 
     # wayland / niri
     wl-clipboard
