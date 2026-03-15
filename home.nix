@@ -9,7 +9,7 @@
     ./niri
     ./rofi
   ];
-
+  
   home.username = "valdir";
   home.homeDirectory = "/home/valdir";
   home.stateVersion = osConfig.system.stateVersion;
@@ -37,8 +37,17 @@
         "git"
         "z"
       ];
-      theme = "robbyrussell";
     };
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+    ];
+    initContent = ''
+      [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+    '';
     shellAliases = {
       gs = "git status";
       sysbuild = "sudo nixos-rebuild switch --flake ~/nixos-config#myBox";

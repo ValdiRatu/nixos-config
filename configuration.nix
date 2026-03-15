@@ -93,7 +93,7 @@
     enable = true;
     package = pkgs.postgresql_18;
     ensureDatabases = [
-      "valdi_db"
+      "valdi"
     ];
     ensureUsers = [
      {
@@ -139,6 +139,8 @@
     "nix-command"
     "flakes"
   ];
+
+  fonts.packages = with pkgs; [ meslo-lgs-nf ];
 
   # zsh
   programs.zsh = {
